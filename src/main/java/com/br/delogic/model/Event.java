@@ -18,7 +18,7 @@ public class Event {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "event_id")
-    private int eventId;
+    private Long eventId;
 
     @ManyToOne
     @JoinColumn(name = "venue_id")
