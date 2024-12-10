@@ -20,7 +20,7 @@ public class Sale {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "sale_id")
-    private int saleId;
+    private Long saleId;
 
     @ManyToOne
     @JoinColumn(name = "listing_id")
