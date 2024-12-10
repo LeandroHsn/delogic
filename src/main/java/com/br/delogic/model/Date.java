@@ -20,19 +20,19 @@ public class Date {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private int id;
+    private Long id;
 
     @Column(name = "calendar_date")
     private LocalDate calendarDate;
 
     @Column(name = "day_date")
-    private int day;
+    private String day;
 
     @Column(name = "week_date")
     private int week;
 
     @Column(name = "month_date")
-    private int month;
+    private String month;
 
     @Column(name = "quarter_date")
     private int quarter;

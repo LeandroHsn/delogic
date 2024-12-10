@@ -1,9 +1,9 @@
 package com.br.delogic.service.impl;
 import com.br.delogic.enums.ErrorMessages;
-import com.br.delogic.model.User;
+import com.br.delogic.model.Date;
 import com.br.delogic.model.json.PaginateObject;
-import com.br.delogic.repository.UserRepository;
-import com.br.delogic.service.UserService;
+import com.br.delogic.repository.DateRepository;
+import com.br.delogic.service.DateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -18,48 +18,48 @@ import java.util.List;
 import java.util.Objects;
 
 @Service
-public class UserServiceImpl implements UserService {
+public class DateServiceImpl implements DateService {
 
         @Autowired
-        private UserRepository userRepository;
+        private DateRepository dateRepository;
 
-        public PaginateObject<User> findAll(Integer pageNumber, Integer pageSize) {
+        public PaginateObject<Date> findAll(Integer pageNumber, Integer pageSize) {
                 return findAllElementPageable(pageNumber, pageSize);
         }
 
         @Transactional(readOnly = true)
-        public PaginateObject<User> findAllElementPageable(Integer pageNumber, Integer pageSize) {
+        public PaginateObject<Date> findAllElementPageable(Integer pageNumber, Integer pageSize) {
 
                 Pageable pageable;
-                List<User> listUsers;
+                List<Date> listDates;
                 int size;
 
                 if (Objects.nonNull(pageNumber) && pageNumber > 0 && Objects.nonNull(pageSize)) {
                         pageable = PageRequest.of(pageNumber - 1, pageSize);
-                        Page<User> list = userRepository.findAll(pageable);
-                        listUsers = new ArrayList<>(list.getContent());
+                        Page<Date> list = dateRepository.findAll(pageable);
+                        listDates = new ArrayList<>(list.getContent());
                         size = (int) list.getTotalElements();
                 } else {
-                        listUsers = userRepository.findAll();
-                        size = listUsers.size();
+                        listDates = dateRepository.findAll();
+                        size = listDates.size();
                 }
 
-                return new PaginateObject<>(size, listUsers);
+                return new PaginateObject<>(size, listDates);
         }
 
         public PaginateObject<Long> findIds(Integer pageNumber, Integer pageSize) {
 
-                int page = (pageNumber != null) ? pageNumber  : 0;
+                int page = (pageNumber != null) ?  pageNumber : 0;
                 int size = (pageSize != null) ? pageSize : Integer.MAX_VALUE;
                 int totalElements;
                 Pageable pageable = size == Integer.MAX_VALUE ? Pageable.unpaged() : PageRequest.of(page - 1, size);
                 List<Long> ids;
 
                 if (size == Integer.MAX_VALUE) {
-                        ids = userRepository.findAllIds();
+                        ids = dateRepository.findAllIds();
                         totalElements = ids.size();
                 } else {
-                        Page<Long> idPage = userRepository.findAllIds(pageable);
+                        Page<Long> idPage = dateRepository.findAllIds(pageable);
                         ids = idPage.getContent();
                         totalElements = (int) idPage.getTotalElements();
                 }
@@ -67,13 +67,13 @@ public class UserServiceImpl implements UserService {
                 return new PaginateObject<>(totalElements, ids);
         }
 
-        public User findById(Long id) {
-                return findUserById(id);
+        public Date findById(Long id) {
+                return findDateById(id);
         }
 
-        public User findUserById(Long id) {
-                return userRepository.findById(id)
-                        .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, ErrorMessages.NOT_FOUND.getMessage("Usuário")));
+        public Date findDateById(Long id) {
+                return dateRepository.findById(id)
+                        .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, ErrorMessages.NOT_FOUND.getMessage("Date")));
         }
 }
 

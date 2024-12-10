@@ -18,6 +18,6 @@ public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificat
     Page<Long> findAllIds(Pageable pageable);
 
     @Query("SELECT u.userId FROM User u")
-    List<Long> findAllIds();  // Sem paginação
+    List<Long> findAllIds();
 
 }

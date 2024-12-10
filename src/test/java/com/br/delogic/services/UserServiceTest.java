@@ -87,14 +87,14 @@ class UserServiceImplTest {
 
     @Test
     void findIds_whenPaginationProvided() {
-        int pageNumber = 1;
+        int pageNumber = 0;
         int pageSize = 2;
         Pageable pageable = PageRequest.of(pageNumber, pageSize);
         List<Long> mockIds = Arrays.asList(1L, 2L);
         Page<Long> mockPage = new PageImpl<>(mockIds, pageable, 5);
         when(userRepository.findAllIds(pageable)).thenReturn(mockPage);
 
-        PaginateObject<Long> result = userService.findIds(pageNumber, pageSize);
+        PaginateObject<Long> result = userService.findIds(pageNumber + 1, pageSize);
 
         assertNotNull(result);
         assertEquals(5, result.getSize());
